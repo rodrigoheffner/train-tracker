@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>Train Tracker</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	</head>
+	<body>
+            <h2>Train Tracker - Beta</h2>
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Standard Departure Time</th>
+                        <th>Estimated Departure Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr wicket:id="trainRoutesListView">
+                        <td wicket:id="from"></td>
+                        <td wicket:id="to"></td>
+                        <td wicket:id="std"></td>
+                        <td wicket:id="eta"></td>
+                    </tr>
+                </tbody>
+            </table>
+	</body>
+</html>
