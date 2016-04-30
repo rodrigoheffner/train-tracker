@@ -43,9 +43,9 @@ import org.xml.sax.SAXException;
  * @author rodrigo
  */
 public class Service {
-    
+
     public static void main(String[] args) throws IOException {
-        Service.getNextDeparture("LWM","CDF");
+        Service.getNextDeparture("LWM", "CDF");
     }
 
     public static TrainTime getNextDeparture(String from, String to) throws MalformedURLException,
@@ -93,6 +93,10 @@ public class Service {
         while ((responseString = in.readLine()) != null) {
             outputString = outputString + responseString;
         }
+
+        TrainTime trainTime = null;
+        
+        try {
 //Parse the String output to a org.w3c.dom.Document and be able to reach every node with the org.w3c.dom API.
         Document document = parseXmlFile(outputString);
 //        NodeList nodeLst = document.getElementsByTagName("GetWeatherResult");
@@ -103,9 +107,13 @@ public class Service {
 //Write the SOAP message formatted to the console.
         String formattedSOAPResponse = formatXML(outputString);
         System.out.println(formattedSOAPResponse);
-//        return weatherResult;
-        return new TrainTime(standardDepartureTime.item(0).getTextContent(), 
-                estimatedDepartureTime.item(0).getTextContent());
+
+        trainTime = new TrainTime(standardDepartureTime.item(0).getTextContent(),
+                estimatedDepartureTime.item(0).getTextContent(), outputString);
+        } catch (Exception e) {
+            trainTime = new TrainTime("error", "error", outputString);
+        }
+        return trainTime;
     }
 
     //format the XML in your String
@@ -150,26 +158,26 @@ public class Service {
 //                + " </web:GetWeather>\n"
 //                + " </soapenv:Body>\n"
 //                + " </soapenv:Envelope>";
-        
-        return "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:typ=\"http://thalesgroup.com/RTTI/2013-11-28/Token/types\" xmlns:ldb=\"http://thalesgroup.com/RTTI/2015-11-27/ldb/\">" +
-"   <soapenv:Header>" +
-"      <typ:AccessToken>" +
-"         <typ:TokenValue>ffc81438-b053-4e01-b7b9-dc53a0c73709</typ:TokenValue>" +
-"      </typ:AccessToken>" +
-"   </soapenv:Header>" +
-"   <soapenv:Body>" +
-"      <ldb:GetNextDeparturesRequest>" +
-"         <ldb:crs>" + from + "</ldb:crs>" +
-"         <ldb:filterList>" +
-"            <!--1 or more repetitions:-->" +
-"            <ldb:crs>" + to + "</ldb:crs>" +
-"         </ldb:filterList>" +
-"         <!--Optional:-->" +
-"         <ldb:timeOffset>0</ldb:timeOffset>" +
-"         <!--Optional:-->" +
-"         <ldb:timeWindow>120</ldb:timeWindow>" +
-"      </ldb:GetNextDeparturesRequest>" +
-"   </soapenv:Body>" +
-"</soapenv:Envelope>";
+
+        return "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:typ=\"http://thalesgroup.com/RTTI/2013-11-28/Token/types\" xmlns:ldb=\"http://thalesgroup.com/RTTI/2015-11-27/ldb/\">"
+                + "   <soapenv:Header>"
+                + "      <typ:AccessToken>"
+                + "         <typ:TokenValue>ffc81438-b053-4e01-b7b9-dc53a0c73709</typ:TokenValue>"
+                + "      </typ:AccessToken>"
+                + "   </soapenv:Header>"
+                + "   <soapenv:Body>"
+                + "      <ldb:GetNextDeparturesRequest>"
+                + "         <ldb:crs>" + from + "</ldb:crs>"
+                + "         <ldb:filterList>"
+                + "            <!--1 or more repetitions:-->"
+                + "            <ldb:crs>" + to + "</ldb:crs>"
+                + "         </ldb:filterList>"
+                + "         <!--Optional:-->"
+                + "         <ldb:timeOffset>0</ldb:timeOffset>"
+                + "         <!--Optional:-->"
+                + "         <ldb:timeWindow>120</ldb:timeWindow>"
+                + "      </ldb:GetNextDeparturesRequest>"
+                + "   </soapenv:Body>"
+                + "</soapenv:Envelope>";
     }
 }

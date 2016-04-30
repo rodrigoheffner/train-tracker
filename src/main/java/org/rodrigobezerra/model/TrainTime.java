@@ -21,12 +21,14 @@ package org.rodrigobezerra.model;
  * @author rodrigo
  */
 public class TrainTime {
-    private String standardDepartureTime;
-    private String estimatedDepartureTime;
+    private String standardDepartureTime = "";
+    private String estimatedDepartureTime = "";
+    private String response = "";
 
-    public TrainTime(String standardDepartureTime, String estimatedDepartureTime) {
+    public TrainTime(String standardDepartureTime, String estimatedDepartureTime, String response) {
         this.standardDepartureTime = standardDepartureTime;
         this.estimatedDepartureTime = estimatedDepartureTime;
+        this.response = response;
     }
 
     public String getStandardDepartureTime() {
@@ -43,5 +45,13 @@ public class TrainTime {
 
     public void setEstimatedDepartureTime(String estimatedDepartureTime) {
         this.estimatedDepartureTime = estimatedDepartureTime;
+    }
+
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
     }
 }

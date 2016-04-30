@@ -2,6 +2,8 @@ package org.rodrigobezerra;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -20,10 +22,16 @@ public class HomePage extends WebPage {
 
             @Override
             protected void populateItem(ListItem<TrainRoute> li) {
+                li.setOutputMarkupId(true);
+                
                 li.add(new Label("from", li.getModelObject().getFrom()));
                 li.add(new Label("to", li.getModelObject().getTo()));
                 li.add(new Label("std", li.getModelObject().getTrainTime().getStandardDepartureTime()));
                 li.add(new Label("eta", li.getModelObject().getTrainTime().getEstimatedDepartureTime()));
+//                li.add(new Label("response", li.getModelObject().getTrainTime().getResponse()));
+                WebMarkupContainer responseLink = new WebMarkupContainer("response");
+                responseLink.add(new AttributeAppender("data-content", li.getModelObject().getTrainTime().getResponse()));
+                li.add(responseLink);
             }
         });
 

@@ -37,8 +37,7 @@ public class TrainRoute {
         try {
             // TODO: Move this code somewhere else
             trainTime = Service.getNextDeparture(from, to);
-        } catch (IOException ex) {
-            trainTime = new TrainTime("error", "error");
+        } catch (Exception ex) {
             // TODO: Add logging
             System.out.println(ex);
         }
